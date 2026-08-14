@@ -1,0 +1,18 @@
+/vendor/
+/node_modules/
+/build/
+
+# Never tracked in a library: a lock records a resolution consumers never use,
+# and it goes stale invisibly because CI resolves fresh.
+composer.lock
+package-lock.json
+
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
