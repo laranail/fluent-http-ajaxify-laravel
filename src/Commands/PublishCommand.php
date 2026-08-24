@@ -17,7 +17,7 @@ class PublishCommand extends Command
     public function handle(): int
     {
         $this->call('vendor:publish', [
-            '--tag'   => 'ajaxify-assets',
+            '--tag'   => 'laranail::fluent-http-ajaxify-assets',
             '--force' => $this->option('force'),
         ]);
 

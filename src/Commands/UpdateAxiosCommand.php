@@ -135,7 +135,7 @@ class UpdateAxiosCommand extends Command
         // ── 6. Optionally re-publish assets ──────────────────────────────
         if ($this->option('publish')) {
             $this->call('vendor:publish', [
-                '--tag'   => 'ajaxify-assets',
+                '--tag'   => 'laranail::fluent-http-ajaxify-assets',
                 '--force' => true,
             ]);
             $this->info('✓ Assets re-published to public/');

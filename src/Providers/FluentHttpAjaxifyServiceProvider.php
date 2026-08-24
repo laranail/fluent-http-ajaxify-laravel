@@ -19,7 +19,7 @@ class FluentHttpAjaxifyServiceProvider extends ServiceProvider
             return new FluentHttpAjaxify($app['request']);
         });
 
-        $this->app->alias(FluentHttpAjaxifyInterface::class, 'fluent-http-ajaxify');
+        $this->app->alias(FluentHttpAjaxifyInterface::class, 'laranail-fluent-http-ajaxify');
     }
 
     public function boot(): void
@@ -27,19 +27,19 @@ class FluentHttpAjaxifyServiceProvider extends ServiceProvider
         // Config
         $this->publishes([
             __DIR__ . '/../../config/fluent-http-ajaxify.php' => config_path('laranail/fluent-http-ajaxify.php'),
-        ], 'ajaxify-config');
+        ], 'laranail::fluent-http-ajaxify-config');
 
         // JS assets
         $this->publishes([
             __DIR__ . '/../../resources/js' => public_path(config('laranail.fluent-http-ajaxify.assets_path', 'vendor/fluent-http')),
-        ], 'ajaxify-assets');
+        ], 'laranail::fluent-http-ajaxify-assets');
 
         // Blade views
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'fluent-http-ajaxify');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'laranail-fluent-http-ajaxify');
 
         $this->publishes([
-            __DIR__ . '/../../resources/views' => resource_path('views/vendor/fluent-http-ajaxify'),
-        ], 'ajaxify-views');
+            __DIR__ . '/../../resources/views' => resource_path('views/vendor/laranail-fluent-http-ajaxify'),
+        ], 'laranail::fluent-http-ajaxify-views');
 
         // Commands
         if ($this->app->runningInConsole()) {

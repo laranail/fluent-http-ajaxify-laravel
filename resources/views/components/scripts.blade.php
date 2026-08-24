@@ -1,10 +1,10 @@
 {{-- FluentHttpAjaxify Scripts Blade Component --}}
 {{--
     Usage:
-      <x-fluent-http-ajaxify::components.scripts />
+      <x-laranail-fluent-http-ajaxify::components.scripts />
 
     Per-instance prop overrides (take precedence over config):
-      <x-fluent-http-ajaxify::components.scripts
+      <x-laranail-fluent-http-ajaxify::components.scripts
           :include-csrf="false"
           :include-axios="false"
           :nonce="$myNonce"

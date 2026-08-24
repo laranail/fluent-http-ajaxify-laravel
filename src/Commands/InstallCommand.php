@@ -22,7 +22,7 @@ class InstallCommand extends Command
 
         // Publish config
         $this->call('vendor:publish', [
-            '--tag'   => 'ajaxify-config',
+            '--tag'   => 'laranail::fluent-http-ajaxify-config',
             '--force' => $this->option('force'),
         ]);
         $this->info('✓ Config published');
@@ -30,7 +30,7 @@ class InstallCommand extends Command
         // Publish JS assets
         if (!$this->option('no-assets')) {
             $this->call('vendor:publish', [
-                '--tag'   => 'ajaxify-assets',
+                '--tag'   => 'laranail::fluent-http-ajaxify-assets',
                 '--force' => $this->option('force'),
             ]);
             $this->info('✓ JS assets published');
@@ -38,7 +38,7 @@ class InstallCommand extends Command
 
         // Publish Blade components
         $this->call('vendor:publish', [
-            '--tag'   => 'ajaxify-views',
+            '--tag'   => 'laranail::fluent-http-ajaxify-views',
             '--force' => $this->option('force'),
         ]);
         $this->info('✓ Blade components published');
@@ -48,7 +48,7 @@ class InstallCommand extends Command
         $this->newLine();
 
         $this->line('Next steps:');
-        $this->line('  1. Add <x-fluent-http-ajaxify::components.scripts /> to your Blade layout (before </body>)');
+        $this->line('  1. Add <x-laranail-fluent-http-ajaxify::components.scripts /> to your Blade layout (before </body>)');
         $this->line('  2. Register middleware in your kernel if needed:');
         $this->line("     'ajaxify.ajax' => \\Simtabi\\Laranail\\FluentHttpAjaxify\\Http\\Middleware\\FluentHttpAjaxifyMiddleware::class");
         $this->line("     'ajaxify.csrf' => \\Simtabi\\Laranail\\FluentHttpAjaxify\\Http\\Middleware\\InjectCsrfMeta::class");
