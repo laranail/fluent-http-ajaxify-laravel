@@ -48,7 +48,7 @@ class InstallCommand extends Command
         $this->newLine();
 
         $this->line('Next steps:');
-        $this->line('  1. Add <x-laranail-fluent-http-ajaxify::components.scripts /> to your Blade layout (before </body>)');
+        $this->line('  1. Add <x-laranail-fluent-http-ajaxify::scripts /> to your Blade layout (before </body>)');
         $this->line('  2. Register middleware in your kernel if needed:');
         $this->line("     'ajaxify.ajax' => \\Simtabi\\Laranail\\FluentHttpAjaxify\\Http\\Middleware\\FluentHttpAjaxifyMiddleware::class");
         $this->line("     'ajaxify.csrf' => \\Simtabi\\Laranail\\FluentHttpAjaxify\\Http\\Middleware\\InjectCsrfMeta::class");

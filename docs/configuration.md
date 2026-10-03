@@ -1,6 +1,6 @@
 # Configuration
 
-Every key in `config/fluent-http-ajaxify.php`. See the [Documentation index](../README.md#documentation).
+Every key in `config/laranail/fluent-http-ajaxify.php`. See the [Documentation index](../README.md#documentation).
 
 ## Keys
 
