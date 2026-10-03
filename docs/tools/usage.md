@@ -8,7 +8,7 @@ validation, and middleware. See the [Documentation index](../../README.md#docume
 Add to your layout before `</body>`:
 
 ```blade
-<x-fluent-http-ajaxify::components.scripts />
+<x-laranail-fluent-http-ajaxify::scripts />
 ```
 
 This loads Axios (CDN with local fallback), FluentHttpAjaxify, FluentToast, and optionally

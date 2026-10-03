@@ -1,16 +1,16 @@
 {{-- FluentHttpAjaxify Scripts Blade Component --}}
 {{--
     Usage:
-      <x-laranail-fluent-http-ajaxify::components.scripts />
+      <x-laranail-fluent-http-ajaxify::scripts />
 
     Per-instance prop overrides (take precedence over config):
-      <x-laranail-fluent-http-ajaxify::components.scripts
+      <x-laranail-fluent-http-ajaxify::scripts
           :include-csrf="false"
           :include-axios="false"
           :nonce="$myNonce"
       />
 
-    Config-level toggles in config/fluent-http-ajaxify.php:
+    Config-level toggles in config/laranail/fluent-http-ajaxify.php:
       - include_csrf_meta : render <meta name="csrf-token"> (default: true)
       - include_axios     : load Axios CDN + local fallback  (default: true)
       - axios_version     : pinned CDN version               (default: 1.13.6)

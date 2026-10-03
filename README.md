@@ -16,7 +16,17 @@ php artisan ajaxify:install
 
 The service provider + `Ajaxify` facade are auto-discovered.
 
-## Quick start
+## Quick start guide and usage
+
+### Getting started
+
+Load the client in your layout, before `</body>`:
+
+```blade
+<x-laranail-fluent-http-ajaxify::scripts />
+```
+
+### Usage
 
 ```php
 use App\Http\Requests\StoreUserRequest;
@@ -30,6 +40,14 @@ public function store(StoreUserRequest $request)
     // JSON with a toast for an AJAX request; a real 302 redirect otherwise
     return Ajaxify::success('User created')->redirect('/users');
 }
+```
+
+Or via the controller trait:
+
+```php
+use Simtabi\Laranail\FluentHttpAjaxify\Traits\HasFluentHttpAjaxify;
+// ...
+return $this->ajaxSuccess('User created', ['user' => $user]);
 ```
 
 The full walkthrough is in [Getting started](docs/getting-started.md); everything else is in the [documentation index](#documentation).

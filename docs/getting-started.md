@@ -17,7 +17,7 @@ See [Installation](installation.md).
 Add the component to your layout before `</body>`:
 
 ```blade
-<x-fluent-http-ajaxify::components.scripts />
+<x-laranail-fluent-http-ajaxify::scripts />
 ```
 
 ## 3. Return a response from a controller
