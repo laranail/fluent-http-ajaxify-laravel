@@ -7,7 +7,7 @@ Return your first dual-mode response — JSON for AJAX requests, a normal redire
 
 ```bash
 composer require laranail/fluent-http-ajaxify-laravel
-php artisan ajaxify:install
+php artisan laranail::fluent-http-ajaxify.install
 ```
 
 See [Installation](installation.md).

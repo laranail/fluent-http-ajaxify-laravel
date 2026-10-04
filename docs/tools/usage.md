@@ -11,8 +11,14 @@ Add to your layout before `</body>`:
 <x-laranail-fluent-http-ajaxify::scripts />
 ```
 
-This loads Axios (CDN with local fallback), FluentHttpAjaxify, FluentToast, and optionally
-FluentHttpWrapper.
+This loads Axios (CDN with local fallback) and FluentHttpAjaxify, plus FluentToast and FluentHttpWrapper
+when you have put them in the assets path. The package does not ship those two; copy them from the
+`fluent-http-ajaxify` npm package (`assets/js/`). Without FluentToast the client uses its built-in console
+notifier for flash messages.
+
+The view is also reachable directly as `laranail/fluent-http-ajaxify::components.scripts`.
+Overrides publish to `resources/views/vendor/laranail/fluent-http-ajaxify/`. Overrides published by
+earlier releases to `resources/views/vendor/laranail-fluent-http-ajaxify/` are still read.
 
 ## Facade
 
@@ -77,20 +83,22 @@ Returns protocol-compatible 422 JSON with `flash` messages for automatic toast d
 
 ## Middleware
 
-The package ships two middleware classes and registers no alias for either; register them in your
-application's `bootstrap/app.php` under whatever names you choose:
+The package ships two middleware classes and registers a vendor-scoped alias for each:
+
+| Alias | Class | Does |
+|---|---|---|
+| `laranail-fluent-http-ajaxify-ajax` | `FluentHttpAjaxifyMiddleware` | converts redirects to JSON for AJAX requests |
+| `laranail-fluent-http-ajaxify-csrf` | `InjectCsrfMeta` | injects the CSRF meta tag into HTML responses |
 
 ```php
-use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware;
-use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\InjectCsrfMeta;
-
-->withMiddleware(function (Middleware $middleware): void {
-    $middleware->alias([
-        'ajaxify.ajax' => FluentHttpAjaxifyMiddleware::class, // convert redirects to JSON for AJAX requests
-        'ajaxify.csrf' => InjectCsrfMeta::class,              // inject the CSRF meta tag into HTML responses
-    ]);
-})
+Route::middleware(['web', 'laranail-fluent-http-ajaxify-ajax', 'laranail-fluent-http-ajaxify-csrf'])
+    ->group(function () {
+        // ...
+    });
 ```
+
+The aliases use hyphens only: Laravel splits a middleware name on `:` to read parameters. The class
+names work as well, for example in `bootstrap/app.php` with `$middleware->web(append: [InjectCsrfMeta::class])`.
 
 ---
 

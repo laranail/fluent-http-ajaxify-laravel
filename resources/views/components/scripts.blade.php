@@ -62,8 +62,13 @@
 {{-- FluentHttpAjaxify --}}
 <script src="{{ asset($assetsPath . '/FluentHttpAjaxify.js') }}"{!! $nonceAttr !!}></script>
 
-{{-- FluentToast --}}
+{{-- FluentToast (optional — only if published). The package does not ship it; copy
+     assets/js/FluentToast.js from the fluent-http-ajaxify npm package into the assets
+     path to enable rich toasts. Without it the client uses its built-in console
+     notifier, as FluentHttpAjaxify.js documents. --}}
+@if(file_exists(public_path($assetsPath . '/FluentToast.js')))
 <script src="{{ asset($assetsPath . '/FluentToast.js') }}"{!! $nonceAttr !!}></script>
+@endif
 
 {{-- FluentHttpWrapper (optional — only if published) --}}
 @if(file_exists(public_path($assetsPath . '/FluentHttpWrapper.js')))

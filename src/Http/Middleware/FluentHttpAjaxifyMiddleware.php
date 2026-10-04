@@ -17,8 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
  * to a JSON response containing the target URL, any session flash
  * messages (when auto_flash is enabled), and validation errors.
  *
- * Register in your kernel or route group:
- *   'ajaxify.ajax' => \Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware::class
+ * Registered by the service provider as the route middleware alias
+ * `laranail-fluent-http-ajaxify-ajax`:
+ *   Route::middleware('laranail-fluent-http-ajaxify-ajax')->group(...)
  */
 class FluentHttpAjaxifyMiddleware
 {

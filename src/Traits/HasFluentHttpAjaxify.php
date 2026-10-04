@@ -56,7 +56,7 @@ trait HasFluentHttpAjaxify
     /**
      * Return a redirect response (dual-mode: JSON for AJAX, redirect for HTTP).
      */
-    protected function ajaxRedirect(string $to, string $message = null, int $status = 302): JsonResponse|RedirectResponse
+    protected function ajaxRedirect(string $to, ?string $message = null, int $status = 302): JsonResponse|RedirectResponse
     {
         $ajax = app(\Simtabi\Laranail\FluentHttpAjaxify\Contracts\FluentHttpAjaxifyInterface::class);
 
@@ -82,7 +82,7 @@ trait HasFluentHttpAjaxify
     /**
      * Return a response with section updates.
      */
-    protected function ajaxSections(array $sections, string $message = null): JsonResponse
+    protected function ajaxSections(array $sections, ?string $message = null): JsonResponse
     {
         $ajax = app(\Simtabi\Laranail\FluentHttpAjaxify\Contracts\FluentHttpAjaxifyInterface::class);
 

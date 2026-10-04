@@ -10,8 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
  * Middleware that auto-injects a <meta name="csrf-token"> tag into HTML responses.
  * This ensures the FluentHttpAjaxify client can detect the CSRF token automatically.
  *
- * Register globally or per-group:
- *   'ajaxify.csrf' => \Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\InjectCsrfMeta::class
+ * Registered by the service provider as the route middleware alias
+ * `laranail-fluent-http-ajaxify-csrf`:
+ *   Route::middleware('laranail-fluent-http-ajaxify-csrf')->group(...)
  */
 class InjectCsrfMeta
 {

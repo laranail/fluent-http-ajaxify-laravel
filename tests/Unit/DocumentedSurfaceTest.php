@@ -36,7 +36,15 @@ class DocumentedSurfaceTest extends TestCase
     {
         $commands = array_keys(Artisan::all());
 
-        foreach (['ajaxify:install', 'ajaxify:publish', 'ajaxify:update-axios'] as $name) {
+        foreach ([
+            'laranail::fluent-http-ajaxify.install',
+            'laranail::fluent-http-ajaxify.publish',
+            'laranail::fluent-http-ajaxify.update-axios',
+            // Deprecated aliases, still documented as such.
+            'ajaxify:install',
+            'ajaxify:publish',
+            'ajaxify:update-axios',
+        ] as $name) {
             $this->assertContains($name, $commands);
         }
     }

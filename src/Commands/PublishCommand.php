@@ -2,15 +2,20 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Commands;
 
-use Illuminate\Console\Command;
-
 /**
  * Publish JS/CSS assets to the public directory.
  */
 class PublishCommand extends Command
 {
-    protected $signature = 'ajaxify:publish
+    protected $signature = 'laranail::fluent-http-ajaxify.publish
                             {--force : Overwrite existing files}';
+
+    /**
+     * @deprecated `ajaxify:publish` goes in the next minor after 0.1; use `laranail::fluent-http-ajaxify.publish`.
+     *
+     * @var list<string>
+     */
+    protected array $commandAliases = ['ajaxify:publish'];
 
     protected $description = 'Publish FluentHttpAjaxify JS assets to public directory';
 
