@@ -111,15 +111,16 @@ return [
     | The pinned Axios version used for the CDN URL. A matching local copy
     | is bundled as a fallback for offline/blocked CDN scenarios.
     |
-    | To upgrade to the latest version automatically:
-    |   php artisan ajaxify:update-axios
+    | To upgrade to the latest version automatically (this file and the
+    | assets must be published first):
+    |   php artisan laranail::fluent-http-ajaxify.update-axios
     |
     | To pin a specific version:
-    |   php artisan ajaxify:update-axios --version=1.14.0
+    |   php artisan laranail::fluent-http-ajaxify.update-axios --axios-version=1.14.0
     |
-    | The command downloads the new build, regenerates the SRI hash below,
-    | and updates both values in this file. Add --publish to also push
-    | the new file to public/.
+    | The command downloads the new build into public/<assets_path>, regenerates
+    | the SRI hash below, and updates both values in this published file. Add
+    | --publish to (re-)publish the package's assets first.
     |
     */
     'axios_version' => '1.13.6',
@@ -133,10 +134,10 @@ return [
     | Prevents execution of tampered or MITM'd CDN scripts. This value is
     | managed automatically by the update command:
     |
-    |   php artisan ajaxify:update-axios
+    |   php artisan laranail::fluent-http-ajaxify.update-axios
     |
     | To regenerate manually:
-    |   cat resources/js/axios.min.js | openssl dgst -sha384 -binary | openssl base64 -A
+    |   cat public/vendor/fluent-http/axios.min.js | openssl dgst -sha384 -binary | openssl base64 -A
     |   # prefix the output with "sha384-"
     |
     */

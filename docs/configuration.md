@@ -24,7 +24,7 @@ Every key in `config/laranail/fluent-http-ajaxify.php`. See the [Documentation i
 
 ## Keeping Axios up to date
 
-`axios_version` + `axios_sri` are pinned. Use [`ajaxify:update-axios`](tools/commands.md) to upgrade them
+`axios_version` + `axios_sri` are pinned. Use [`laranail::fluent-http-ajaxify.update-axios`](tools/commands.md) to upgrade them
 to the latest release safely (fetches it, validates the download, recomputes the SRI hash, and updates the
 config).
 

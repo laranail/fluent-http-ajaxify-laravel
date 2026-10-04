@@ -19,7 +19,7 @@ The service provider and `Ajaxify` facade are auto-discovered.
 ## Publish assets
 
 ```bash
-php artisan ajaxify:install
+php artisan laranail::fluent-http-ajaxify.install
 ```
 
 This publishes the config, JS assets, and Blade views. Or publish individually:
@@ -31,9 +31,11 @@ php artisan vendor:publish --tag=laranail::fluent-http-ajaxify-views
 ```
 
 The config lands in `config/laranail/fluent-http-ajaxify.php`, the JS in `public/vendor/fluent-http/`
-(the `assets_path` config key), and the views in `resources/views/vendor/laranail-fluent-http-ajaxify/`.
+(the `assets_path` config key), and the views in `resources/views/vendor/laranail/fluent-http-ajaxify/`.
 
-See [Artisan commands](tools/commands.md) for `ajaxify:install`, `ajaxify:publish` and `ajaxify:update-axios`.
+See [Artisan commands](tools/commands.md) for `laranail::fluent-http-ajaxify.install`,
+`laranail::fluent-http-ajaxify.publish` and `laranail::fluent-http-ajaxify.update-axios`. The bare
+`ajaxify:*` names are deprecated aliases of these.
 
 ## Next steps
 

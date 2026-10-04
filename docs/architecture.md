@@ -11,12 +11,14 @@ How a single controller return value serves both AJAX and normal requests. See t
 - **Traits** — `HasFluentHttpAjaxify` (controller shorthands) and `FluentHttpAjaxifyValidation`
   (protocol-compatible 422 responses from form requests).
 - **Middleware** — `FluentHttpAjaxifyMiddleware` (converts redirects to JSON for AJAX) and `InjectCsrfMeta`
-  (injects the CSRF meta tag). See [Usage patterns](tools/usage.md).
+  (injects the CSRF meta tag), aliased `laranail-fluent-http-ajaxify-ajax` and
+  `laranail-fluent-http-ajaxify-csrf`. See [Usage patterns](tools/usage.md).
 - **Blade component + JS assets** — `<x-laranail-fluent-http-ajaxify::scripts />` (the view
-  `resources/views/components/scripts.blade.php`) loads Axios (CDN + local fallback, SRI-pinned),
-  FluentHttpAjaxify, and FluentToast; the client applies the server's directives (section redraws, toasts,
+  `resources/views/components/scripts.blade.php`, namespace `laranail/fluent-http-ajaxify::`) loads Axios
+  (CDN + local fallback, SRI-pinned), FluentHttpAjaxify, and FluentToast when published; the client applies the server's directives (section redraws, toasts,
   modal/form control, event emission).
-- **Commands** — `ajaxify:install`, `ajaxify:publish` and `ajaxify:update-axios`. See [Artisan commands](tools/commands.md).
+- **Commands** — `laranail::fluent-http-ajaxify.install`, `.publish` and `.update-axios` (the bare
+  `ajaxify:*` names are deprecated aliases). See [Artisan commands](tools/commands.md).
 
 ## Request flow
 

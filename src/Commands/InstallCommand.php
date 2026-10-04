@@ -2,7 +2,7 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Commands;
 
-use Illuminate\Console\Command;
+use Simtabi\Laranail\FluentHttpAjaxify\Providers\FluentHttpAjaxifyServiceProvider;
 
 /**
  * Full setup wizard for FluentHttpAjaxify.
@@ -10,9 +10,16 @@ use Illuminate\Console\Command;
  */
 class InstallCommand extends Command
 {
-    protected $signature = 'ajaxify:install
+    protected $signature = 'laranail::fluent-http-ajaxify.install
                             {--force : Overwrite existing files}
                             {--no-assets : Skip JS asset publishing}';
+
+    /**
+     * @deprecated `ajaxify:install` goes in the next minor after 0.1; use `laranail::fluent-http-ajaxify.install`.
+     *
+     * @var list<string>
+     */
+    protected array $commandAliases = ['ajaxify:install'];
 
     protected $description = 'Install FluentHttpAjaxify: publish config, assets, and set up middleware';
 
@@ -49,9 +56,9 @@ class InstallCommand extends Command
 
         $this->line('Next steps:');
         $this->line('  1. Add <x-laranail-fluent-http-ajaxify::scripts /> to your Blade layout (before </body>)');
-        $this->line('  2. Register middleware in your kernel if needed:');
-        $this->line("     'ajaxify.ajax' => \\Simtabi\\Laranail\\FluentHttpAjaxify\\Http\\Middleware\\FluentHttpAjaxifyMiddleware::class");
-        $this->line("     'ajaxify.csrf' => \\Simtabi\\Laranail\\FluentHttpAjaxify\\Http\\Middleware\\InjectCsrfMeta::class");
+        $this->line('  2. Apply middleware where needed; the package registers these aliases:');
+        $this->line("     ->middleware('" . FluentHttpAjaxifyServiceProvider::MIDDLEWARE_AJAX . "')   // FluentHttpAjaxifyMiddleware");
+        $this->line("     ->middleware('" . FluentHttpAjaxifyServiceProvider::MIDDLEWARE_CSRF . "')   // InjectCsrfMeta");
         $this->line('  3. Use the HasFluentHttpAjaxify trait in your controllers');
 
         return self::SUCCESS;
