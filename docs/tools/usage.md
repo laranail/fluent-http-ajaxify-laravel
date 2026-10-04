@@ -30,6 +30,8 @@ See the full method list in [Facade & service API](facade.md).
 ## Controller trait
 
 ```php
+use App\Models\User;
+use Illuminate\Http\Request;
 use Simtabi\Laranail\FluentHttpAjaxify\Traits\HasFluentHttpAjaxify;
 
 class UserController extends Controller
@@ -38,7 +40,10 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $user = User::create($request->validated());
+        $user = User::create($request->validate([
+            'email' => 'required|email',
+            'name'  => 'required|min:2',
+        ]));
         return $this->ajaxSuccess('User created', ['user' => $user]);
     }
 
@@ -72,12 +77,19 @@ Returns protocol-compatible 422 JSON with `flash` messages for automatic toast d
 
 ## Middleware
 
-```php
-// Auto-convert redirects to JSON for AJAX requests
-'ajaxify.ajax' => \Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware::class,
+The package ships two middleware classes and registers no alias for either; register them in your
+application's `bootstrap/app.php` under whatever names you choose:
 
-// Auto-inject the CSRF meta tag into HTML responses
-'ajaxify.csrf' => \Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\InjectCsrfMeta::class,
+```php
+use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware;
+use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\InjectCsrfMeta;
+
+->withMiddleware(function (Middleware $middleware): void {
+    $middleware->alias([
+        'ajaxify.ajax' => FluentHttpAjaxifyMiddleware::class, // convert redirects to JSON for AJAX requests
+        'ajaxify.csrf' => InjectCsrfMeta::class,              // inject the CSRF meta tag into HTML responses
+    ]);
+})
 ```
 
 ---

@@ -19,7 +19,7 @@ return [
     | CSRF Meta Tag — Blade Component
     |--------------------------------------------------------------------------
     |
-    | When true, the <x-fluent-http-ajaxify::components.scripts /> Blade
+    | When true, the <x-laranail-fluent-http-ajaxify::scripts /> Blade
     | component renders a <meta name="csrf-token"> tag. Set to false if
     | your layout already includes it to avoid duplicates.
     |
