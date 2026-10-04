@@ -22,10 +22,15 @@ Add the component to your layout before `</body>`:
 
 ## 3. Return a response from a controller
 
+`validated()` lives on a form request, so type-hint one (or call `$request->validate([...])` on a plain
+`Request`):
+
 ```php
+use App\Http\Requests\StoreUserRequest;
+use App\Models\User;
 use Simtabi\Laranail\FluentHttpAjaxify\Facade\Ajaxify;
 
-public function store(Request $request)
+public function store(StoreUserRequest $request)
 {
     User::create($request->validated());
 
@@ -38,7 +43,8 @@ Or via the controller trait:
 
 ```php
 use Simtabi\Laranail\FluentHttpAjaxify\Traits\HasFluentHttpAjaxify;
-// ...
+
+// in a controller that declares `use HasFluentHttpAjaxify;`
 return $this->ajaxSuccess('User created', ['user' => $user]);
 ```
 

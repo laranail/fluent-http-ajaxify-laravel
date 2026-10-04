@@ -12,10 +12,11 @@ How a single controller return value serves both AJAX and normal requests. See t
   (protocol-compatible 422 responses from form requests).
 - **Middleware** — `FluentHttpAjaxifyMiddleware` (converts redirects to JSON for AJAX) and `InjectCsrfMeta`
   (injects the CSRF meta tag). See [Usage patterns](tools/usage.md).
-- **Blade component + JS assets** — `components.scripts` loads Axios (CDN + local fallback, SRI-pinned),
+- **Blade component + JS assets** — `<x-laranail-fluent-http-ajaxify::scripts />` (the view
+  `resources/views/components/scripts.blade.php`) loads Axios (CDN + local fallback, SRI-pinned),
   FluentHttpAjaxify, and FluentToast; the client applies the server's directives (section redraws, toasts,
   modal/form control, event emission).
-- **Commands** — `ajaxify:install` + `ajaxify:update-axios`. See [Artisan commands](tools/commands.md).
+- **Commands** — `ajaxify:install`, `ajaxify:publish` and `ajaxify:update-axios`. See [Artisan commands](tools/commands.md).
 
 ## Request flow
 

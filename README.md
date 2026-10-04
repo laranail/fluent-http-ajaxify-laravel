@@ -20,7 +20,8 @@ The service provider + `Ajaxify` facade are auto-discovered.
 
 ### Getting started
 
-Load the client in your layout, before `</body>`:
+`ajaxify:install` (above) publishes the config to `config/laranail/fluent-http-ajaxify.php` and the JS
+the component loads to `public/vendor/fluent-http/`. Then load the client in your layout, before `</body>`:
 
 ```blade
 <x-laranail-fluent-http-ajaxify::scripts />
@@ -46,7 +47,8 @@ Or via the controller trait:
 
 ```php
 use Simtabi\Laranail\FluentHttpAjaxify\Traits\HasFluentHttpAjaxify;
-// ...
+
+// in a controller that declares `use HasFluentHttpAjaxify;`
 return $this->ajaxSuccess('User created', ['user' => $user]);
 ```
 
@@ -58,14 +60,14 @@ Full documentation is at **[opensource.simtabi.com/documentation/laranail/fluent
 
 ## Stability
 
-Pre-1.0, with 31 tests covering the response protocol, security headers,
-middleware and validation. Constraints resolve `^0.1`; new SemVer minors begin
+Pre-1.0, with a test suite covering the response protocol, security headers,
+middleware, validation, and the Blade tag, commands and publish tags this README names. Constraints resolve `^0.1`; new SemVer minors begin
 at 1.0.
 
 ## Contributing & security
 
 Issues and PRs are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). Report vulnerabilities per
-[SECURITY.md](SECURITY.md) (opensource@simtabi.com); participation follows the [Code of Conduct](CODE_OF_CONDUCT.md).
+[SECURITY.md](SECURITY.md) (security@simtabi.com); participation follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 

@@ -13,7 +13,7 @@ use Simtabi\Laranail\FluentHttpAjaxify\Facade\Ajaxify;
  *   class UserController extends Controller {
  *       use HasFluentHttpAjaxify;
  *
- *       public function store(Request $request) {
+ *       public function store(StoreUserRequest $request) {
  *           $user = User::create($request->validated());
  *           return $this->ajaxSuccess('User created', ['user' => $user]);
  *       }

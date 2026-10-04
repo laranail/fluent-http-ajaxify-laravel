@@ -25,12 +25,15 @@ php artisan ajaxify:install
 This publishes the config, JS assets, and Blade views. Or publish individually:
 
 ```bash
-php artisan vendor:publish --tag=ajaxify-config
-php artisan vendor:publish --tag=ajaxify-assets
-php artisan vendor:publish --tag=ajaxify-views
+php artisan vendor:publish --tag=laranail::fluent-http-ajaxify-config
+php artisan vendor:publish --tag=laranail::fluent-http-ajaxify-assets
+php artisan vendor:publish --tag=laranail::fluent-http-ajaxify-views
 ```
 
-See [Artisan commands](tools/commands.md) for `ajaxify:install` + `ajaxify:update-axios`.
+The config lands in `config/laranail/fluent-http-ajaxify.php`, the JS in `public/vendor/fluent-http/`
+(the `assets_path` config key), and the views in `resources/views/vendor/laranail-fluent-http-ajaxify/`.
+
+See [Artisan commands](tools/commands.md) for `ajaxify:install`, `ajaxify:publish` and `ajaxify:update-axios`.
 
 ## Next steps
 
