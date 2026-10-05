@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `illuminate/contracts` is now declared in `require` at `^13.0`. `src/` imports it, and it was only arriving transitively.
 - `composer.json` declares `illuminate/console`, `illuminate/view` and `illuminate/validation`
   (`^13.0`), which the commands, the Blade component and the validation trait use; testbench had been
   supplying them.
