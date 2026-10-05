@@ -35,7 +35,7 @@ class InstallCommand extends Command
         $this->info('✓ Config published');
 
         // Publish JS assets
-        if (!$this->option('no-assets')) {
+        if (! $this->option('no-assets')) {
             $this->call('vendor:publish', [
                 '--tag'   => 'laranail::fluent-http-ajaxify-assets',
                 '--force' => $this->option('force'),

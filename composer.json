@@ -34,11 +34,15 @@
     ],
     "require": {
         "php": "^8.4.1 || ^8.5",
+        "illuminate/console": "^13.0",
         "illuminate/http": "^13.0",
         "illuminate/routing": "^13.0",
-        "illuminate/support": "^13.0"
+        "illuminate/support": "^13.0",
+        "illuminate/validation": "^13.0",
+        "illuminate/view": "^13.0"
     },
     "require-dev": {
+        "laravel/pint": "^1.30",
         "orchestra/testbench": "^11.0",
         "phpunit/phpunit": "^13.0"
     },
@@ -51,6 +55,16 @@
         "psr-4": {
             "Simtabi\\Laranail\\FluentHttpAjaxify\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --no-coverage",
+        "pint": "vendor/bin/pint --test",
+        "pint-fix": "vendor/bin/pint",
+        "lint": [
+            "@pint"
+        ],
+        "format": "@pint-fix",
+        "sync-client": "bin/sync-client"
     },
     "extra": {
         "laravel": {

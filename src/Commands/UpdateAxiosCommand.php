@@ -2,8 +2,9 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Commands;
 
-use Illuminate\Support\Facades\Http;
+use Throwable;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 /**
  * Fetch the latest (or a specific) Axios version from npm, download the
@@ -24,6 +25,10 @@ use Illuminate\Support\Str;
  */
 class UpdateAxiosCommand extends Command
 {
+    private const NPM_REGISTRY = 'https://registry.npmjs.org/axios/latest';
+
+    private const CDN_TEMPLATE = 'https://cdn.jsdelivr.net/npm/axios@%s/dist/axios.min.js';
+
     /**
      * `--axios-version` replaces `--version`, which Artisan reserves globally:
      * declaring it made `--help` throw and `--version` print the framework version.
@@ -42,17 +47,14 @@ class UpdateAxiosCommand extends Command
 
     protected $description = 'Download the latest Axios release, regenerate the SRI hash, and update the published config and assets';
 
-    private const NPM_REGISTRY = 'https://registry.npmjs.org/axios/latest';
-    private const CDN_TEMPLATE = 'https://cdn.jsdelivr.net/npm/axios@%s/dist/axios.min.js';
-
     public function handle(): int
     {
-        $dryRun  = $this->option('dry-run');
+        $dryRun = $this->option('dry-run');
         $current = config('laranail.fluent-http-ajaxify.axios_version', 'unknown');
 
         // ── 0. Require the published copies this command writes to ───────
         $configPath = $this->publishedConfigPath();
-        $assetsDir  = $this->publishedAssetsDir();
+        $assetsDir = $this->publishedAssetsDir();
 
         $missing = [];
 
@@ -90,18 +92,21 @@ class UpdateAxiosCommand extends Command
 
                 if (! $response->ok()) {
                     $this->error('Failed to reach npm registry (HTTP ' . $response->status() . ').');
+
                     return self::FAILURE;
                 }
 
                 $target = $response->json('version');
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $this->error('Could not reach npm registry: ' . $e->getMessage());
+
                 return self::FAILURE;
             }
         }
 
         if (! $target || ! preg_match('/^\d+\.\d+\.\d+/', $target)) {
             $this->error("Invalid version resolved: {$target}");
+
             return self::FAILURE;
         }
 
@@ -110,6 +115,7 @@ class UpdateAxiosCommand extends Command
 
         if ($current === $target) {
             $this->info('Already up to date.');
+
             return self::SUCCESS;
         }
 
@@ -122,10 +128,12 @@ class UpdateAxiosCommand extends Command
 
             if (! $js->ok()) {
                 $this->error("CDN returned HTTP {$js->status()} — version {$target} may not exist.");
+
                 return self::FAILURE;
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->error('Download failed: ' . $e->getMessage());
+
             return self::FAILURE;
         }
 
@@ -133,12 +141,14 @@ class UpdateAxiosCommand extends Command
 
         if (strlen($body) < 1000) {
             $this->error('Downloaded file is suspiciously small (' . strlen($body) . ' bytes). Aborting.');
+
             return self::FAILURE;
         }
 
         // Verify it looks like axios
         if (! Str::contains($body, 'axios', true)) {
             $this->error('Downloaded file does not appear to be Axios. Aborting.');
+
             return self::FAILURE;
         }
 
@@ -157,6 +167,7 @@ class UpdateAxiosCommand extends Command
                     ['axios_sri', Str::limit(config('laranail.fluent-http-ajaxify.axios_sri', ''), 40), Str::limit($hash, 40)],
                 ],
             );
+
             return self::SUCCESS;
         }
 

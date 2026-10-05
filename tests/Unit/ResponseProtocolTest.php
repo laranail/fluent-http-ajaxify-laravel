@@ -2,30 +2,24 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Tests\Unit;
 
+use ReflectionClass;
 use Illuminate\Http\Request;
-use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
 use Simtabi\Laranail\FluentHttpAjaxify\Tests\TestCase;
+use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
 
 class ResponseProtocolTest extends TestCase
 {
-    protected function createAjax(): FluentHttpAjaxify
-    {
-        return new FluentHttpAjaxify(Request::create('/test', 'GET', [], [], [], [
-            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
-        ]));
-    }
-
     public function test_uniform_sections_use_flat_format_with_top_level_draw_mode(): void
     {
         $ajax = $this->createAjax();
         $ajax->appendView('list');
 
         // Manually set sections to simulate view rendering
-        $reflection = new \ReflectionClass($ajax);
+        $reflection = new ReflectionClass($ajax);
         $sectionsProperty = $reflection->getProperty('sections');
         $sectionsProperty->setAccessible(true);
         $sectionsProperty->setValue($ajax, [
-            '#list' => ['html' => '<li>Item 1</li>', 'mode' => 'append'],
+            '#list'    => ['html' => '<li>Item 1</li>', 'mode' => 'append'],
             '#sidebar' => ['html' => '<div>Sidebar</div>', 'mode' => 'append'],
         ]);
 
@@ -42,11 +36,11 @@ class ResponseProtocolTest extends TestCase
     {
         $ajax = $this->createAjax();
 
-        $reflection = new \ReflectionClass($ajax);
+        $reflection = new ReflectionClass($ajax);
         $sectionsProperty = $reflection->getProperty('sections');
         $sectionsProperty->setAccessible(true);
         $sectionsProperty->setValue($ajax, [
-            '#list' => ['html' => '<li>Item 1</li>', 'mode' => 'redraw'],
+            '#list'    => ['html' => '<li>Item 1</li>', 'mode' => 'redraw'],
             '#sidebar' => ['html' => '<div>Sidebar</div>', 'mode' => 'append'],
         ]);
 
@@ -69,7 +63,7 @@ class ResponseProtocolTest extends TestCase
     {
         $ajax = $this->createAjax();
 
-        $reflection = new \ReflectionClass($ajax);
+        $reflection = new ReflectionClass($ajax);
         $sectionsProperty = $reflection->getProperty('sections');
         $sectionsProperty->setAccessible(true);
         $sectionsProperty->setValue($ajax, [
@@ -124,5 +118,12 @@ class ResponseProtocolTest extends TestCase
         $this->assertCount(1, $flashes);
         $this->assertEquals('success', $flashes[0]['type']);
         $this->assertEquals('Done!', $flashes[0]['message']);
+    }
+
+    protected function createAjax(): FluentHttpAjaxify
+    {
+        return new FluentHttpAjaxify(Request::create('/test', 'GET', [], [], [], [
+            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
+        ]));
     }
 }

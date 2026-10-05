@@ -19,8 +19,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   exercised against a throwaway base path and must leave the package itself untouched; the naming test
   reads commands, aliases, middleware and view hints from the live registries.
 
+- The real JavaScript client. `resources/js/FluentHttpAjaxify.js` was a 232-byte placeholder, so every
+  install published a client that did nothing. It, `FluentToast.js` and `FluentHttpWrapper.js` are now
+  the v3.0.0 build from [`laranail/fluent-http-ajaxify-js`](https://github.com/laranail/fluent-http-ajaxify-js),
+  each stamped with its source commit. Existing installs must re-publish with
+  `php artisan laranail::fluent-http-ajaxify.publish --force` to replace the placeholder in `public/`.
+- `bin/sync-client` (`composer sync-client`) copies those files from a client checkout and records the
+  commit; it refuses a checkout with uncommitted changes under `assets/js`.
+- Tests: the shipped client must exceed 100 KB, export `FluentHttpAjaxify` and carry the source-commit
+  header; the toast module must be the real build; every asset the scripts view can reference, guarded
+  or not, must exist in `resources/js`.
+- Pint (`laravel/pint`, `pint.json`, `composer lint` / `composer format`) and a CI job running
+  `vendor/bin/pint --test`. `pint.json` is package-tools' with `declare_strict_types` off, since that
+  rule changes runtime coercion and belongs in its own change.
+
 ### Changed
 
+- `composer.json` declares `illuminate/console`, `illuminate/view` and `illuminate/validation`
+  (`^13.0`), which the commands, the Blade component and the validation trait use; testbench had been
+  supplying them.
+- Install docs: the package is not on Packagist, so the README and `docs/installation.md` give the VCS
+  repository block (with Packagist excluded for `laranail/*`) instead of a bare `composer require`.
+- Source formatted with Pint (formatting only).
 - **Breaking.** All public names move onto the org shapes: views/components
   `laranail-fluent-http-ajaxify::` (`<x-laranail-fluent-http-ajaxify::scripts />`;
   published overrides under `resources/views/vendor/laranail-fluent-http-ajaxify/`), publish

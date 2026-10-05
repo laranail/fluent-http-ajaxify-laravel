@@ -5,13 +5,13 @@ namespace Simtabi\Laranail\FluentHttpAjaxify\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\View\Factory as ViewFactory;
+use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
 use Simtabi\Laranail\FluentHttpAjaxify\Commands\InstallCommand;
 use Simtabi\Laranail\FluentHttpAjaxify\Commands\PublishCommand;
 use Simtabi\Laranail\FluentHttpAjaxify\Commands\UpdateAxiosCommand;
-use Simtabi\Laranail\FluentHttpAjaxify\Contracts\FluentHttpAjaxifyInterface;
-use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
-use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware;
 use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\InjectCsrfMeta;
+use Simtabi\Laranail\FluentHttpAjaxify\Contracts\FluentHttpAjaxifyInterface;
+use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware;
 
 class FluentHttpAjaxifyServiceProvider extends ServiceProvider
 {

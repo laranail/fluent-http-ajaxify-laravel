@@ -2,8 +2,8 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Tests\Unit;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Filesystem\Filesystem;
 use Simtabi\Laranail\FluentHttpAjaxify\Tests\TestCase;
 
 /**
@@ -23,10 +23,10 @@ class UpdateAxiosCommandTest extends TestCase
     protected function setUp(): void
     {
         self::$root = sys_get_temp_dir() . '/fha-base-' . bin2hex(random_bytes(4));
-        (new Filesystem())->ensureDirectoryExists(self::$root . '/public');
-        (new Filesystem())->ensureDirectoryExists(self::$root . '/config');
+        (new Filesystem)->ensureDirectoryExists(self::$root . '/public');
+        (new Filesystem)->ensureDirectoryExists(self::$root . '/config');
 
-        $this->packageAxiosHash  = hash_file('sha256', $this->packagePath('resources/js/axios.min.js'));
+        $this->packageAxiosHash = hash_file('sha256', $this->packagePath('resources/js/axios.min.js'));
         $this->packageConfigHash = hash_file('sha256', $this->packagePath('config/fluent-http-ajaxify.php'));
 
         parent::setUp();
@@ -41,18 +41,11 @@ class UpdateAxiosCommandTest extends TestCase
     {
         parent::tearDown();
 
-        (new Filesystem())->deleteDirectory(self::$root);
+        (new Filesystem)->deleteDirectory(self::$root);
 
         // Whatever happened, the package itself must be untouched.
         $this->assertSame($this->packageAxiosHash, hash_file('sha256', $this->packagePath('resources/js/axios.min.js')));
         $this->assertSame($this->packageConfigHash, hash_file('sha256', $this->packagePath('config/fluent-http-ajaxify.php')));
-    }
-
-    protected function defineEnvironment($app): void
-    {
-        // Before the provider boots, so the publish groups point here too.
-        $app->usePublicPath(self::$root . '/public');
-        $app->useConfigPath(self::$root . '/config');
     }
 
     public function test_it_refuses_and_exits_non_zero_when_nothing_is_published(): void
@@ -131,6 +124,13 @@ class UpdateAxiosCommandTest extends TestCase
         $this->artisan('help', ['command_name' => 'laranail::fluent-http-ajaxify.update-axios'])
             ->expectsOutputToContain('--axios-version')
             ->assertSuccessful();
+    }
+
+    protected function defineEnvironment($app): void
+    {
+        // Before the provider boots, so the publish groups point here too.
+        $app->usePublicPath(self::$root . '/public');
+        $app->useConfigPath(self::$root . '/config');
     }
 
     private function publishAll(): void

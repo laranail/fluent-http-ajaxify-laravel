@@ -62,15 +62,15 @@
 {{-- FluentHttpAjaxify --}}
 <script src="{{ asset($assetsPath . '/FluentHttpAjaxify.js') }}"{!! $nonceAttr !!}></script>
 
-{{-- FluentToast (optional — only if published). The package does not ship it; copy
-     assets/js/FluentToast.js from the fluent-http-ajaxify npm package into the assets
-     path to enable rich toasts. Without it the client uses its built-in console
-     notifier, as FluentHttpAjaxify.js documents. --}}
+{{-- FluentToast (loaded once published). resources/js ships it, synced from
+     laranail/fluent-http-ajaxify-js by bin/sync-client, so the publish command puts it
+     in the assets path. If it is removed from there the client falls back to its
+     built-in console notifier, as FluentHttpAjaxify.js documents. --}}
 @if(file_exists(public_path($assetsPath . '/FluentToast.js')))
 <script src="{{ asset($assetsPath . '/FluentToast.js') }}"{!! $nonceAttr !!}></script>
 @endif
 
-{{-- FluentHttpWrapper (optional — only if published) --}}
+{{-- FluentHttpWrapper (loaded once published; shipped and synced like FluentToast) --}}
 @if(file_exists(public_path($assetsPath . '/FluentHttpWrapper.js')))
 <script src="{{ asset($assetsPath . '/FluentHttpWrapper.js') }}"{!! $nonceAttr !!}></script>
 @endif

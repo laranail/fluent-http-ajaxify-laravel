@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+#
+# Copy the built FluentHttpAjaxify client into resources/js, from a checkout of
+# laranail/fluent-http-ajaxify-js, and stamp each file with the commit it came from.
+#
+#   bin/sync-client [path-to-fluent-http-ajaxify-js]   (default: ../fluent-http-ajaxify-js)
+#   bin/sync-client --unversioned [path]               source is not a git checkout yet
+#
+# resources/js is published verbatim to public/<assets_path> by
+# `laranail::fluent-http-ajaxify.publish`, so these files ARE what users run.
+# Edit them in the source repository, never here; tests/Unit/ScriptAssetsTest
+# fails on a placeholder or on a file without the provenance header.
+set -euo pipefail
+
+unversioned=0
+if [[ "${1:-}" == "--unversioned" ]]; then unversioned=1; shift; fi
+
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+src="$(cd "${1:-$here/../fluent-http-ajaxify-js}" && pwd)"
+dest="$here/resources/js"
+files=(FluentHttpAjaxify.js FluentToast.js FluentHttpWrapper.js)
+
+for f in "${files[@]}"; do
+    [[ -f "$src/assets/js/$f" ]] || { echo "sync-client: $src/assets/js/$f not found -- is $src a fluent-http-ajaxify-js checkout?" >&2; exit 1; }
+done
+
+if git -C "$src" rev-parse --verify -q HEAD >/dev/null 2>&1; then
+    ref="$(git -C "$src" rev-parse HEAD)"
+    if [[ -n "$(git -C "$src" status --porcelain -- assets/js)" ]]; then
+        echo "sync-client: $src has uncommitted changes under assets/js; commit them first so the header names real code." >&2
+        exit 1
+    fi
+elif [[ $unversioned -eq 1 ]]; then
+    ref="UNVERSIONED"
+else
+    echo "sync-client: $src is not a git checkout with a commit. Pass --unversioned to copy anyway (the test suite will reject the header until it names a commit)." >&2
+    exit 1
+fi
+
+version="$(sed -n 's/^ *"version": *"\([^"]*\)".*/\1/p' "$src/package.json" | head -n1)"
+
+for f in "${files[@]}"; do
+    {
+        printf '// Synced from laranail/fluent-http-ajaxify-js@%s (v%s) by bin/sync-client -- edit the source repository, not this file.\n' "$ref" "${version:-unknown}"
+        cat "$src/assets/js/$f"
+    } > "$dest/$f.tmp"
+    mv "$dest/$f.tmp" "$dest/$f"
+    echo "synced $f ($(wc -c < "$dest/$f" | tr -d ' ') bytes) from @$ref"
+done

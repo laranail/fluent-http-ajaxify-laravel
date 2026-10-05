@@ -5,18 +5,32 @@
 
 Two of the usual four badges are absent because their claims would be false: the package is not published to Packagist (no registry-version badge), and the repository runs no static-analysis workflow.
 
-> Laravel integration for [FluentHttpAjaxify](https://github.com/simtabi/fluent-http-ajaxify) — server-driven AJAX responses from one controller return value: dual-mode responses (JSON for AJAX, real redirects/views otherwise), a fluent builder (flash/toast, section redraws, modal/form control, events), a controller trait, form-request validation, middleware, a Blade component, and a CSRF-safe, SRI-pinned Axios loader.
+> Laravel integration for [FluentHttpAjaxify](https://github.com/laranail/fluent-http-ajaxify-js) — server-driven AJAX responses from one controller return value: dual-mode responses (JSON for AJAX, real redirects/views otherwise), a fluent builder (flash/toast, section redraws, modal/form control, events), a controller trait, form-request validation, middleware, a Blade component, and a CSRF-safe, SRI-pinned Axios loader.
 
 Requires PHP `^8.4.1 || ^8.5` and Laravel `^13.0`.
 
 ## Install
 
+The package is not on Packagist. Add its VCS repository to your application's `composer.json`, and
+keep Packagist from answering for `laranail/*` names, so a stale or squatted copy there can never win:
+
+```json
+"repositories": [
+    { "type": "vcs", "url": "https://github.com/laranail/fluent-http-ajaxify-laravel" },
+    { "type": "composer", "url": "https://repo.packagist.org", "exclude": ["laranail/*"] },
+    { "packagist.org": false }
+]
+```
+
+Then require it:
+
 ```bash
-composer require laranail/fluent-http-ajaxify-laravel
+composer require laranail/fluent-http-ajaxify-laravel:^0.1
 php artisan laranail::fluent-http-ajaxify.install
 ```
 
-The service provider + `Ajaxify` facade are auto-discovered.
+The service provider + `Ajaxify` facade are auto-discovered. The JavaScript client ships in `resources/js`,
+synced from [`laranail/fluent-http-ajaxify-js`](https://github.com/laranail/fluent-http-ajaxify-js); the install command publishes it.
 
 ## Quick start guide and usage
 

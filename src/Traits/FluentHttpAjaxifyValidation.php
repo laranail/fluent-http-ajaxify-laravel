@@ -39,7 +39,7 @@ trait FluentHttpAjaxifyValidation
                             'message' => $firstMessage ?: 'Please fix the errors below.',
                         ],
                     ],
-                ], 422)
+                ], 422),
             );
         }
 

@@ -3,11 +3,11 @@
 namespace Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
 use Symfony\Component\HttpFoundation\Response;
+use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
 
 /**
  * Middleware that auto-detects AJAX requests and formats responses
@@ -27,7 +27,7 @@ class FluentHttpAjaxifyMiddleware
     {
         $response = $next($request);
 
-        if (!$this->isAjaxRequest($request)) {
+        if (! $this->isAjaxRequest($request)) {
             return $response;
         }
 
@@ -49,7 +49,7 @@ class FluentHttpAjaxifyMiddleware
         }
 
         $payload = [
-            'success'  => !$response->isClientError() && !$response->isServerError(),
+            'success'  => ! $response->isClientError() && ! $response->isServerError(),
             'message'  => 'Redirecting',
             'redirect' => $targetUrl,
         ];
@@ -61,7 +61,7 @@ class FluentHttpAjaxifyMiddleware
             if (config('laranail.fluent-http-ajaxify.auto_flash', true)) {
                 $flash = FluentHttpAjaxify::collectFlashesFromRequest($request);
 
-                if (!empty($flash)) {
+                if (! empty($flash)) {
                     $payload['flash'] = $flash;
                 }
             }
@@ -73,7 +73,7 @@ class FluentHttpAjaxifyMiddleware
                 $errors = $session->get('errors');
 
                 if ($errors instanceof \Illuminate\Support\ViewErrorBag && $errors->any()) {
-                    $payload['errors']  = $errors->getBag('default')->toArray();
+                    $payload['errors'] = $errors->getBag('default')->toArray();
                     $payload['success'] = false;
                 }
             }
@@ -81,7 +81,6 @@ class FluentHttpAjaxifyMiddleware
 
         return response()->json($payload, $response->getStatusCode());
     }
-
 
     protected function isAjaxRequest(Request $request): bool
     {

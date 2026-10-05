@@ -2,9 +2,9 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Tests\Unit;
 
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Blade;
 use InvalidArgumentException;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Artisan;
 use Simtabi\Laranail\FluentHttpAjaxify\Tests\TestCase;
 
 /**

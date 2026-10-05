@@ -2,10 +2,10 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Tests\Unit;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
+use Illuminate\Http\JsonResponse;
 use Simtabi\Laranail\FluentHttpAjaxify\Tests\TestCase;
+use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
 
 class FluentHttpAjaxifyTest extends TestCase
 {
@@ -129,7 +129,7 @@ class FluentHttpAjaxifyTest extends TestCase
     {
         $response = $this->ajax->redirectWithErrors('/form', [
             'email' => ['Email is required'],
-            'name' => ['Name is too short'],
+            'name'  => ['Name is too short'],
         ]);
 
         $this->assertInstanceOf(JsonResponse::class, $response);

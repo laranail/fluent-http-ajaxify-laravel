@@ -2,8 +2,8 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Tests\Unit;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Blade;
 use Simtabi\Laranail\FluentHttpAjaxify\Tests\TestCase;
 
 /**
@@ -59,6 +59,55 @@ class ScriptAssetsTest extends TestCase
 
         $this->assertContains('FluentToast.js', $requested);
         $this->assertNotContains('FluentHttpWrapper.js', $requested);
+    }
+
+    public function test_every_asset_the_view_can_reference_is_shipped(): void
+    {
+        // Read the template, not the render: the guarded references (FluentToast,
+        // FluentHttpWrapper) are only emitted once published, and publishing copies
+        // resources/js -- so each of them has to exist there for the guard to ever pass.
+        $template = (string) file_get_contents(dirname(__DIR__, 2) . '/resources/views/components/scripts.blade.php');
+
+        preg_match_all('#\$assetsPath\s*\.\s*\x27/([A-Za-z0-9._-]+)\x27#', $template, $matches);
+        $referenced = array_values(array_unique($matches[1]));
+
+        // Non-vacuity: axios fallback, the client, FluentToast and FluentHttpWrapper.
+        $this->assertGreaterThanOrEqual(4, count($referenced), 'The template scan found fewer asset references than the view makes; the pattern is broken.');
+
+        foreach ($referenced as $file) {
+            $this->assertFileExists(self::shippedPath($file), "The scripts view can request {$file}, which resources/js does not ship.");
+        }
+    }
+
+    public function test_the_shipped_client_is_the_real_build_not_the_placeholder(): void
+    {
+        $client = self::shippedPath('FluentHttpAjaxify.js');
+
+        // The placeholder was 232 bytes; the v3 client is ~184 KB.
+        $this->assertGreaterThan(100_000, (int) filesize($client), 'resources/js/FluentHttpAjaxify.js is too small to be the client; is it the placeholder again?');
+
+        $source = (string) file_get_contents($client);
+
+        $this->assertStringNotContainsString('This is a placeholder', $source);
+        $this->assertStringContainsString('root.FluentHttpAjaxify = factory()', $source, 'The UMD export of FluentHttpAjaxify is missing.');
+        $this->assertStringContainsString('static getRegistration()', $source);
+        // Only the first line: matching against the whole file would dump 180 KB on failure.
+        $header = strtok($source, "\n");
+        $this->assertMatchesRegularExpression('#^// Synced from laranail/fluent-http-ajaxify-js@[0-9a-f]{7,40} #', (string) $header, 'The client carries no source-commit header; run bin/sync-client against a committed checkout.');
+    }
+
+    public function test_the_shipped_toast_module_is_the_real_build(): void
+    {
+        $toast = self::shippedPath('FluentToast.js');
+
+        $this->assertFileExists($toast);
+        $this->assertGreaterThan(10_000, (int) filesize($toast), 'resources/js/FluentToast.js is too small to be the toast module.');
+        $this->assertStringContainsString('root.FluentToast = factory()', (string) file_get_contents($toast), 'The UMD export of FluentToast is missing.');
+    }
+
+    private static function shippedPath(string $file): string
+    {
+        return dirname(__DIR__, 2) . '/resources/js/' . $file;
     }
 
     /**

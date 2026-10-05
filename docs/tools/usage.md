@@ -12,9 +12,10 @@ Add to your layout before `</body>`:
 ```
 
 This loads Axios (CDN with local fallback) and FluentHttpAjaxify, plus FluentToast and FluentHttpWrapper
-when you have put them in the assets path. The package does not ship those two; copy them from the
-`fluent-http-ajaxify` npm package (`assets/js/`). Without FluentToast the client uses its built-in console
-notifier for flash messages.
+once they are in the assets path. The package ships all three in `resources/js`, synced from
+[`laranail/fluent-http-ajaxify-js`](https://github.com/laranail/fluent-http-ajaxify-js), and publishing
+the assets puts them there. If you delete FluentToast from the assets path, the client falls back to its
+built-in console notifier for flash messages.
 
 The view is also reachable directly as `laranail/fluent-http-ajaxify::components.scripts`.
 Overrides publish to `resources/views/vendor/laranail/fluent-http-ajaxify/`. Overrides published by
