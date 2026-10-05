@@ -6,11 +6,12 @@ Return your first dual-mode response — JSON for AJAX requests, a normal redire
 ## 1. Install + publish
 
 ```bash
-composer require laranail/fluent-http-ajaxify-laravel
+composer require laranail/fluent-http-ajaxify-laravel:^0.1
 php artisan laranail::fluent-http-ajaxify.install
 ```
 
-See [Installation](installation.md).
+The package is not on Packagist, so `composer require` needs its VCS repository declared first; the
+block to add is in [Installation](installation.md).
 
 ## 2. Load the client
 

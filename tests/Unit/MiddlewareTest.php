@@ -2,10 +2,10 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Tests\Unit;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware;
+use Illuminate\Http\RedirectResponse;
 use Simtabi\Laranail\FluentHttpAjaxify\Tests\TestCase;
+use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware;
 
 class MiddlewareTest extends TestCase
 {
@@ -14,14 +14,7 @@ class MiddlewareTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->middleware = new FluentHttpAjaxifyMiddleware();
-    }
-
-    protected function createAjaxRequest(string $uri = '/test'): Request
-    {
-        return Request::create($uri, 'GET', [], [], [], [
-            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
-        ]);
+        $this->middleware = new FluentHttpAjaxifyMiddleware;
     }
 
     public function test_redirect_conversion_includes_message_field(): void
@@ -88,5 +81,12 @@ class MiddlewareTest extends TestCase
         });
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
+    }
+
+    protected function createAjaxRequest(string $uri = '/test'): Request
+    {
+        return Request::create($uri, 'GET', [], [], [], [
+            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
+        ]);
     }
 }

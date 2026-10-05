@@ -2,14 +2,14 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Tests\Unit;
 
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\ServiceProvider;
 use ReflectionClass;
-use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware;
-use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\InjectCsrfMeta;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\ServiceProvider;
 use Simtabi\Laranail\FluentHttpAjaxify\Tests\TestCase;
+use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\InjectCsrfMeta;
+use Simtabi\Laranail\FluentHttpAjaxify\Http\Middleware\FluentHttpAjaxifyMiddleware;
 
 /**
  * The org naming guard, read from the LIVE registries — flat maps

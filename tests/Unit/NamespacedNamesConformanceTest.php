@@ -2,11 +2,11 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Tests\Unit;
 
+use Throwable;
 use ArrayIterator;
 use PHPUnit\Framework\TestCase;
-use Simtabi\Laranail\FluentHttpAjaxify\Commands\Concerns\SupportsNamespacedNames as NamespacedNames;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
-use Throwable;
+use Simtabi\Laranail\FluentHttpAjaxify\Commands\Concerns\SupportsNamespacedNames as NamespacedNames;
 
 /**
  * Conformance for the `laranail::<slug>.<command>` naming trait.
@@ -23,14 +23,6 @@ use Throwable;
  */
 class NamespacedNamesConformanceTest extends TestCase
 {
-    private function command(): SymfonyCommand
-    {
-        return new class extends SymfonyCommand
-        {
-            use NamespacedNames;
-        };
-    }
-
     public function test_it_accepts_a_name_symfony_validate_name_would_reject(): void
     {
         $this->assertSame('laranail::atlas.doctor', $this->command()->setName('laranail::atlas.doctor')->getName());
@@ -81,5 +73,13 @@ class NamespacedNamesConformanceTest extends TestCase
         };
 
         $this->assertSame(['laranail::atlas.dr'], $command->setName('laranail::atlas.doctor')->getAliases());
+    }
+
+    private function command(): SymfonyCommand
+    {
+        return new class extends SymfonyCommand
+        {
+            use NamespacedNames;
+        };
     }
 }

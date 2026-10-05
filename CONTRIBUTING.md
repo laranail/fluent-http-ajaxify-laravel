@@ -23,6 +23,20 @@ consumers never use, and it goes stale invisibly because CI resolves fresh.
   `config('laranail.<slug>.*')`.
 - Dependencies use range constraints (`^1.2`), never an exact pin.
 
+## The JavaScript client
+
+`resources/js/FluentHttpAjaxify.js`, `FluentToast.js` and `FluentHttpWrapper.js` are copies of
+[`laranail/fluent-http-ajaxify-js`](https://github.com/laranail/fluent-http-ajaxify-js). Change them there,
+then run `bin/sync-client` here; it stamps each file with the source commit, and `ScriptAssetsTest`
+fails on a file without that header or on the old placeholder. `axios.min.js` is maintained by
+`laranail::fluent-http-ajaxify.update-axios`.
+
+## Formatting
+
+`composer lint` runs Pint in test mode, as CI does; `composer format` applies it. `pint.json` is
+package-tools' configuration with `declare_strict_types` switched off: turning it on changes runtime
+coercion, so it lands as its own change.
+
 ## Pull requests
 
 Branch from `main`, keep the subject line under 72 characters and in the
@@ -33,4 +47,5 @@ notice.
 ## Reporting problems
 
 Bugs and features: GitHub Issues. Vulnerabilities: see
-[SECURITY.md](SECURITY.md) — **opensource@simtabi.com**, never a public issue.
+[SECURITY.md](SECURITY.md) — GitHub private vulnerability reporting, or **security@simtabi.com**;
+never a public issue.

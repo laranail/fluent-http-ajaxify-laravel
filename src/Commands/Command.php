@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Commands;
 
-use Illuminate\Console\Command as IlluminateCommand;
-use Simtabi\Laranail\FluentHttpAjaxify\Commands\Concerns\SupportsNamespacedNames;
 use Symfony\Component\Console\Input\InputInterface;
+use Illuminate\Console\Command as IlluminateCommand;
 use Symfony\Component\Console\Output\OutputInterface;
+use Simtabi\Laranail\FluentHttpAjaxify\Commands\Concerns\SupportsNamespacedNames;
 
 /**
  * Base for this package's commands: the `laranail::fluent-http-ajaxify.<command>`

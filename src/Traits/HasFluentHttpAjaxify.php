@@ -4,7 +4,6 @@ namespace Simtabi\Laranail\FluentHttpAjaxify\Traits;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Simtabi\Laranail\FluentHttpAjaxify\Facade\Ajaxify;
 
 /**
  * Controller trait providing shorthand methods for FluentHttpAjaxify responses.
@@ -28,7 +27,7 @@ trait HasFluentHttpAjaxify
     {
         $ajax = app(\Simtabi\Laranail\FluentHttpAjaxify\Contracts\FluentHttpAjaxifyInterface::class);
 
-        if (!empty($data)) {
+        if (! empty($data)) {
             $ajax->setJson($data);
         }
 
@@ -46,7 +45,7 @@ trait HasFluentHttpAjaxify
         $ajax->error($message);
         $ajax->mergeJson(['success' => false, 'message' => $message]);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $ajax->mergeJson(['errors' => $errors]);
         }
 

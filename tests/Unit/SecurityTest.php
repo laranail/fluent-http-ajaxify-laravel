@@ -2,10 +2,9 @@
 
 namespace Simtabi\Laranail\FluentHttpAjaxify\Tests\Unit;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
 use Simtabi\Laranail\FluentHttpAjaxify\Tests\TestCase;
+use Simtabi\Laranail\FluentHttpAjaxify\FluentHttpAjaxify;
 
 class SecurityTest extends TestCase
 {

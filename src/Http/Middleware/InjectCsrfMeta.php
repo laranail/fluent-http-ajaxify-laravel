@@ -20,18 +20,18 @@ class InjectCsrfMeta
     {
         $response = $next($request);
 
-        if (!config('laranail.fluent-http-ajaxify.inject_csrf_meta', true)) {
+        if (! config('laranail.fluent-http-ajaxify.inject_csrf_meta', true)) {
             return $response;
         }
 
         // Only inject into HTML responses
         $contentType = $response->headers->get('Content-Type', '');
-        if (strpos($contentType, 'text/html') === false && !$response instanceof \Illuminate\Http\Response) {
+        if (strpos($contentType, 'text/html') === false && ! $response instanceof \Illuminate\Http\Response) {
             return $response;
         }
 
         $content = $response->getContent();
-        if (!is_string($content) || empty($content)) {
+        if (! is_string($content) || empty($content)) {
             return $response;
         }
 
