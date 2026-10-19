@@ -35,6 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- A guard now keeps literal credentials out of the tests, and keeps every generated credential's
+  purpose a single word, because secret scanners cannot tell a test password from a leaked one.
+  `laranail/package-tools` `^0.1.10`, which ships it, is added to `require-dev`.
 - `illuminate/contracts` is now declared in `require` at `^13.0`. `src/` imports it, and it was only arriving transitively.
 - `composer.json` declares `illuminate/console`, `illuminate/view` and `illuminate/validation`
   (`^13.0`), which the commands, the Blade component and the validation trait use; testbench had been
